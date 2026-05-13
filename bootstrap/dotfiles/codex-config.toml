@@ -1,0 +1,15 @@
+# codex-config.toml (suggested)
+# Copy to: ~/.codex/config.toml
+#
+# Notes:
+# - Keep project-specific trust rules out of this template.
+# - Tune `approval_policy` / `sandbox_mode` to your preference.
+
+model = "gpt-5.5"
+model_reasoning_effort = "xhigh"
+
+approval_policy = "on-request"
+sandbox_mode = "workspace-write"
+
+[plugins."github@openai-curated"]
+enabled = true

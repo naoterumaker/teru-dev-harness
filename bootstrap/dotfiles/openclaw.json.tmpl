@@ -1,0 +1,704 @@
+// openclaw.json.tmpl (sanitized)
+// Replace placeholders and save as ~/.openclaw/openclaw.json
+// Secrets must come from env vars or secret store (never commit real values).
+
+{
+  "acp": {
+    "allowedAgents": [
+      "codex",
+      "claude"
+    ],
+    "backend": "acpx",
+    "defaultAgent": "claude",
+    "dispatch": {
+      "enabled": true
+    },
+    "enabled": true,
+    "maxConcurrentSessions": 4,
+    "runtime": {
+      "installCommand": "npm install -g acpx@latest",
+      "ttlMinutes": 30
+    }
+  },
+  "agents": {
+    "defaults": {
+      "blockStreamingBreak": "text_end",
+      "blockStreamingDefault": "on",
+      "compaction": {
+        "memoryFlush": {
+          "enabled": true,
+          "prompt": "{{COMPACTION_PROMPT}}",
+          "softThresholdTokens": 20000,
+          "systemPrompt": "{{COMPACTION_SYSTEM_PROMPT}}"
+        },
+        "mode": "safeguard",
+        "postCompactionSections": [
+          "⚠️ コンテキスト監視 & コンパクション検知（必須・最優先）"
+        ],
+        "reserveTokensFloor": 60000
+      },
+      "contextPruning": {
+        "hardClear": {
+          "enabled": true,
+          "placeholder": "[Old tool result cleared]"
+        },
+        "keepLastAssistants": 5,
+        "mode": "cache-ttl",
+        "softTrim": {
+          "headChars": 2000,
+          "maxChars": 5000,
+          "tailChars": 2000
+        },
+        "ttl": "1h"
+      },
+      "heartbeat": {
+        "every": "1h"
+      },
+      "maxConcurrent": 4,
+      "model": {
+        "fallbacks": [],
+        "primary": "openai/gpt-5.5"
+      },
+      "models": {
+        "google/gemma-4-26b-a4b-it": {},
+        "google/gemma-4-31b-it": {},
+        "openai/gpt-5.4": {
+          "agentRuntime": {
+            "id": "codex"
+          }
+        },
+        "openai/gpt-5.5": {
+          "agentRuntime": {
+            "id": "codex"
+          }
+        },
+        "zai/glm-5": {
+          "alias": "GLM"
+        },
+        "zai/glm-5.1": {}
+      },
+      "subagents": {
+        "maxConcurrent": 8
+      },
+      "timeoutSeconds": 1200,
+      "workspace": "{{USER_HOME}}/clawd"
+    },
+    "list": [
+      {
+        "id": "main"
+      },
+      {
+        "agentDir": "{{USER_HOME}}/.openclaw/agents/sns-specialist/agent",
+        "id": "sns-specialist",
+        "identity": {
+          "emoji": "📱",
+          "name": "SNS_SPECIALIST"
+        },
+        "model": "openai/gpt-5.5",
+        "models": {
+          "openai/gpt-5.5": {
+            "agentRuntime": {
+              "id": "codex"
+            }
+          }
+        },
+        "name": "sns-specialist",
+        "workspace": "{{USER_HOME}}/clawd"
+      },
+      {
+        "agentDir": "{{USER_HOME}}/.openclaw/agents/sys-engineer/agent",
+        "id": "sys-engineer",
+        "identity": {
+          "emoji": "⚙️",
+          "name": "SYS_ENGINEER"
+        },
+        "model": "openai/gpt-5.5",
+        "models": {
+          "openai/gpt-5.5": {
+            "agentRuntime": {
+              "id": "codex"
+            }
+          }
+        },
+        "name": "sys-engineer",
+        "workspace": "{{USER_HOME}}/clawd"
+      },
+      {
+        "__truncated__": 5
+      }
+    ]
+  },
+  "auth": {
+    "profiles": {
+      "anthropic:default": {
+        "mode": "api_key",
+        "provider": "anthropic"
+      },
+      "openai-codex:default": {
+        "email": "{{EMAIL}}",
+        "mode": "oauth",
+        "provider": "openai-codex"
+      },
+      "zai:default": {
+        "mode": "api_key",
+        "provider": "zai"
+      }
+    }
+  },
+  "bindings": [
+    {
+      "agentId": "sns-specialist",
+      "match": {
+        "accountId": "1484011086498889788",
+        "channel": "discord"
+      },
+      "type": "route"
+    },
+    {
+      "agentId": "sys-engineer",
+      "match": {
+        "accountId": "1482261691998797874",
+        "channel": "discord"
+      },
+      "type": "route"
+    }
+  ],
+  "browser": {
+    "defaultProfile": "openclaw",
+    "enabled": true,
+    "profiles": {
+      "chrome-mcp": {
+        "attachOnly": true,
+        "cdpPort": 9222,
+        "color": "#4285F4",
+        "driver": "openclaw"
+      }
+    }
+  },
+  "channels": {
+    "discord": {
+      "allowBots": "mentions",
+      "configWrites": false,
+      "enabled": true,
+      "groupPolicy": "allowlist",
+      "guilds": {
+        "1314684069019385987": {
+          "channels": {
+            "*": {
+              "autoArchiveDuration": 10080,
+              "enabled": true
+            }
+          },
+          "requireMention": true,
+          "users": [
+            "971703824198824008"
+          ]
+        },
+        "1335190818692009998": {
+          "channels": {
+            "*": {
+              "autoArchiveDuration": 10080,
+              "enabled": true
+            }
+          },
+          "requireMention": true
+        },
+        "1393147416739446835": {
+          "channels": {
+            "*": {
+              "autoArchiveDuration": 10080,
+              "enabled": true
+            }
+          },
+          "requireMention": true
+        },
+        "1474320833269993475": {
+          "channels": {
+            "*": {
+              "autoArchiveDuration": 10080,
+              "enabled": true
+            }
+          },
+          "requireMention": true,
+          "users": [
+            "971703824198824008"
+          ]
+        }
+      },
+      "historyLimit": 0,
+      "streaming": {
+        "mode": "partial"
+      },
+      "threadBindings": {
+        "enabled": true,
+        "spawnSessions": true
+      },
+      "token": "{{REDACTED}}"
+    },
+    "line": {
+      "allowFrom": [
+        "Udd27fc18ce5f1594ff4f01b39b103218"
+      ],
+      "dmPolicy": "pairing",
+      "enabled": true,
+      "groupPolicy": "allowlist"
+    }
+  },
+  "commands": {
+    "native": true,
+    "nativeSkills": true,
+    "ownerDisplay": "raw",
+    "restart": true
+  },
+  "env": {
+    "vars": {
+      "ANTHROPIC_API_KEY": "${ANTHROPIC_API_KEY}",
+      "BRAVE_API_KEY": "{{REDACTED}}",
+      "BRAVE_SEARCH_API_KEY": "{{REDACTED}}",
+      "EXA_API_KEY": "{{REDACTED}}",
+      "GOOGLE_API_KEY": "{{REDACTED}}",
+      "GROQ_API_KEY": "{{REDACTED}}",
+      "OPENAI_API_KEY": "${OPENAI_API_KEY}",
+      "TAVILY_API_KEY": "{{REDACTED}}"
+    }
+  },
+  "gateway": {
+    "auth": {
+      "mode": "token",
+      "token": "{{REDACTED}}"
+    },
+    "bind": "loopback",
+    "mode": "local",
+    "port": 18789,
+    "tailscale": {
+      "mode": "serve",
+      "resetOnExit": false
+    }
+  },
+  "hooks": {
+    "internal": {
+      "enabled": true,
+      "entries": {
+        "session-memory": {
+          "enabled": true
+        }
+      }
+    }
+  },
+  "mcp": {
+    "servers": {
+      "xmcp": {
+        "url": "http://127.0.0.1:8000/mcp"
+      }
+    }
+  },
+  "messages": {
+    "ackReactionScope": "group-mentions",
+    "groupChat": {
+      "visibleReplies": "message_tool"
+    }
+  },
+  "meta": {
+    "lastTouchedAt": "2026-05-13T11:59:13.751Z",
+    "lastTouchedVersion": "2026.5.12-beta.4"
+  },
+  "models": {
+    "mode": "merge",
+    "providers": {
+      "anthropic": {
+        "api": "anthropic-messages",
+        "auth": "api-key",
+        "baseUrl": "https://api.anthropic.com",
+        "models": [
+          {
+            "contextWindow": 200000,
+            "cost": {
+              "cacheRead": 0,
+              "cacheWrite": 0,
+              "input": 0,
+              "output": 0
+            },
+            "id": "claude-sonnet-4-6",
+            "input": [
+              "text"
+            ],
+            "maxTokens": 16384,
+            "name": "claude-sonnet-4-6",
+            "reasoning": false
+          },
+          {
+            "contextWindow": 200000,
+            "cost": {
+              "cacheRead": 0,
+              "cacheWrite": 0,
+              "input": 0,
+              "output": 0
+            },
+            "id": "claude-opus-4-6",
+            "input": [
+              "text"
+            ],
+            "maxTokens": 16384,
+            "name": "claude-opus-4-6",
+            "reasoning": false
+          }
+        ]
+      },
+      "google": {
+        "api": "openai-completions",
+        "apiKey": "{{REDACTED}}",
+        "auth": "api-key",
+        "baseUrl": "https://generativelanguage.googleapis.com/v1beta/openai",
+        "models": [
+          {
+            "contextWindow": 131072,
+            "id": "gemma-4-31b-it",
+            "input": [
+              "text"
+            ],
+            "maxTokens": 8192,
+            "name": "Gemma 4 31B IT",
+            "reasoning": false
+          },
+          {
+            "contextWindow": 131072,
+            "id": "gemma-4-26b-a4b-it",
+            "input": [
+              "text"
+            ],
+            "maxTokens": 8192,
+            "name": "Gemma 4 26B A4B IT",
+            "reasoning": false
+          }
+        ]
+      },
+      "zai": {
+        "api": "openai-completions",
+        "baseUrl": "https://api.z.ai/api/coding/paas/v4",
+        "models": [
+          {
+            "contextWindow": 202800,
+            "cost": {
+              "cacheRead": 0.24,
+              "cacheWrite": 0,
+              "input": 1.2,
+              "output": 4
+            },
+            "id": "glm-5.1",
+            "input": [
+              "text"
+            ],
+            "maxTokens": 131100,
+            "name": "GLM-5.1",
+            "reasoning": true
+          },
+          {
+            "contextWindow": 202800,
+            "cost": {
+              "cacheRead": 0.2,
+              "cacheWrite": 0,
+              "input": 1,
+              "output": 3.2
+            },
+            "id": "glm-5",
+            "input": [
+              "text"
+            ],
+            "maxTokens": 131100,
+            "name": "GLM-5",
+            "reasoning": true
+          },
+          {
+            "contextWindow": 202800,
+            "cost": {
+              "cacheRead": 0.24,
+              "cacheWrite": 0,
+              "input": 1.2,
+              "output": 4
+            },
+            "id": "glm-5-turbo",
+            "input": [
+              "text"
+            ],
+            "maxTokens": 131100,
+            "name": "GLM-5 Turbo",
+            "reasoning": true
+          },
+          {
+            "contextWindow": 202800,
+            "cost": {
+              "cacheRead": 0.24,
+              "cacheWrite": 0,
+              "input": 1.2,
+              "output": 4
+            },
+            "id": "glm-5v-turbo",
+            "input": [
+              "text",
+              "image"
+            ],
+            "maxTokens": 131100,
+            "name": "GLM-5V Turbo",
+            "reasoning": true
+          },
+          {
+            "contextWindow": 204800,
+            "cost": {
+              "cacheRead": 0.11,
+              "cacheWrite": 0,
+              "input": 0.6,
+              "output": 2.2
+            },
+            "id": "glm-4.7",
+            "input": [
+              "text"
+            ],
+            "maxTokens": 131072,
+            "name": "GLM-4.7",
+            "reasoning": true
+          },
+          {
+            "contextWindow": 200000,
+            "cost": {
+              "cacheRead": 0,
+              "cacheWrite": 0,
+              "input": 0.07,
+              "output": 0.4
+            },
+            "id": "glm-4.7-flash",
+            "input": [
+              "text"
+            ],
+            "maxTokens": 131072,
+            "name": "GLM-4.7 Flash",
+            "reasoning": true
+          },
+          {
+            "contextWindow": 200000,
+            "cost": {
+              "cacheRead": 0.01,
+              "cacheWrite": 0,
+              "input": 0.06,
+              "output": 0.4
+            },
+            "id": "glm-4.7-flashx",
+            "input": [
+              "text"
+            ],
+            "maxTokens": 128000,
+            "name": "GLM-4.7 FlashX",
+            "reasoning": true
+          },
+          {
+            "contextWindow": 204800,
+            "cost": {
+              "cacheRead": 0.11,
+              "cacheWrite": 0,
+              "input": 0.6,
+              "output": 2.2
+            },
+            "id": "glm-4.6",
+            "input": [
+              "text"
+            ],
+            "maxTokens": 131072,
+            "name": "GLM-4.6",
+            "reasoning": true
+          },
+          {
+            "contextWindow": 128000,
+            "cost": {
+              "cacheRead": 0,
+              "cacheWrite": 0,
+              "input": 0.3,
+              "output": 0.9
+            },
+            "id": "glm-4.6v",
+            "input": [
+              "text",
+              "image"
+            ],
+            "maxTokens": 32768,
+            "name": "GLM-4.6V",
+            "reasoning": true
+          },
+          {
+            "contextWindow": 131072,
+            "cost": {
+              "cacheRead": 0.11,
+              "cacheWrite": 0,
+              "input": 0.6,
+              "output": 2.2
+            },
+            "id": "glm-4.5",
+            "input": [
+              "text"
+            ],
+            "maxTokens": 98304,
+            "name": "GLM-4.5",
+            "reasoning": true
+          },
+          {
+            "contextWindow": 131072,
+            "cost": {
+              "cacheRead": 0.03,
+              "cacheWrite": 0,
+              "input": 0.2,
+              "output": 1.1
+            },
+            "id": "glm-4.5-air",
+            "input": [
+              "text"
+            ],
+            "maxTokens": 98304,
+            "name": "GLM-4.5 Air",
+            "reasoning": true
+          },
+          {
+            "contextWindow": 131072,
+            "cost": {
+              "cacheRead": 0,
+              "cacheWrite": 0,
+              "input": 0,
+              "output": 0
+            },
+            "id": "glm-4.5-flash",
+            "input": [
+              "text"
+            ],
+            "maxTokens": 98304,
+            "name": "GLM-4.5 Flash",
+            "reasoning": true
+          },
+          {
+            "contextWindow": 64000,
+            "cost": {
+              "cacheRead": 0,
+              "cacheWrite": 0,
+              "input": 0.6,
+              "output": 1.8
+            },
+            "id": "glm-4.5v",
+            "input": [
+              "text",
+              "image"
+            ],
+            "maxTokens": 16384,
+            "name": "GLM-4.5V",
+            "reasoning": true
+          }
+        ]
+      }
+    }
+  },
+  "plugins": {
+    "allow": [
+      "device-pair",
+      "discord",
+      "line",
+      "llm-task",
+      "ollama",
+      "phone-control",
+      "sglang",
+      "talk-voice",
+      "vllm",
+      "lossless-claw",
+      "acpx",
+      "openai",
+      "anthropic",
+      "browser",
+      "zai",
+      "google",
+      "memory-core"
+    ],
+    "bundledDiscovery": "compat",
+    "entries": {
+      "acpx": {
+        "config": {
+          "cwd": "{{USER_HOME}}/clawd",
+          "permissionMode": "approve-all"
+        },
+        "enabled": true
+      },
+      "anthropic": {
+        "enabled": true
+      },
+      "browser": {
+        "enabled": true
+      },
+      "discord": {
+        "config": {},
+        "enabled": true
+      },
+      "google": {
+        "enabled": true
+      },
+      "line": {
+        "config": {},
+        "enabled": true
+      },
+      "llm-task": {
+        "config": {
+          "maxTokens": 2000,
+          "timeoutMs": 60000
+        },
+        "enabled": true
+      },
+      "lossless-claw": {
+        "config": {
+          "contextThreshold": 0.75,
+          "freshTailCount": 32,
+          "incrementalMaxDepth": -1,
+          "summaryModel": "openai-codex/gpt-5.5"
+        },
+        "enabled": true
+      },
+      "openai": {
+        "enabled": true
+      },
+      "zai": {
+        "enabled": true
+      }
+    },
+    "slots": {
+      "contextEngine": "lossless-claw"
+    }
+  },
+  "skills": {
+    "entries": {
+      "__truncated__": 39,
+      "gpt-research": {
+        "apiKey": "{{REDACTED}}"
+      },
+      "image-gen": {
+        "apiKey": "{{REDACTED}}"
+      },
+      "notion": {
+        "enabled": false
+      },
+      "openai-whisper": {
+        "enabled": false
+      },
+      "web-research": {
+        "apiKey": "{{REDACTED}}"
+      }
+    },
+    "install": {
+      "nodeManager": "npm"
+    }
+  },
+  "tools": {
+    "agentToAgent": {
+      "enabled": true
+    },
+    "sessions": {
+      "visibility": "all"
+    }
+  },
+  "wizard": {
+    "lastRunAt": "2026-05-13T11:58:13.684Z",
+    "lastRunCommand": "doctor",
+    "lastRunMode": "local",
+    "lastRunVersion": "2026.5.12-beta.4"
+  }
+}
