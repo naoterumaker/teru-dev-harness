@@ -22,8 +22,11 @@ cd ~/dev/teru-dev-harness
 bash bootstrap/install.sh
 ```
 
-詳細は `docs/00_overview.md` から読む。
+詳細:
+
+- `docs/00_overview.md` — overview
+- `PRIOR_ART.md` — references / prior art
 
 ## 状態
 
-🚧 構築中。骨格と README のみ。中身は順次埋める。
+🚧 構築中。中身は揃ったが、運用しながら更新する前提。
