@@ -1,0 +1,61 @@
+<!--
+HANDOFF_CONTEXT.md.tmpl
+Copy to project root as `HANDOFF_CONTEXT.md`.
+This file is stable context (environment assumptions).
+-->
+
+# HANDOFF_CONTEXT — {{PROJECT_NAME}}
+
+## Workdir / Paths
+
+- Repo path (absolute): {{ABS_WORKDIR}}
+- Important paths:
+  - {{PATH_1}}
+  - {{PATH_2}}
+
+## Ports / URLs
+
+- Local URL: {{LOCAL_URL}}
+- Ports:
+  - {{PORT_1_NAME}}: {{PORT_1_NUMBER}}
+  - {{PORT_2_NAME}}: {{PORT_2_NUMBER}}
+
+## How to run
+
+```bash
+# install
+{{INSTALL_CMD}}
+
+# dev
+{{DEV_CMD}}
+
+# test
+{{TEST_CMD}}
+```
+
+## Key data / state
+
+- DB: {{DB_TYPE_AND_LOCATION}}
+- Migrations: {{MIGRATIONS_PATH_OR_CMD}}
+- Seeds: {{SEED_CMD_OR_NA}}
+
+## Non-negotiables (MUST / MUST NOT)
+
+- MUST NOT: `/tmp` / `/private/tmp` 作業
+- MUST NOT: `git add -A` / `git add .`
+- MUST NOT: `--no-verify`
+- MUST NOT: secrets を repo / ログに貼る（値は不可）
+
+## Mines / Traps (地雷)
+
+- {{MINE_1}}
+- {{MINE_2}}
+
+## Completion report (完了報告)
+
+作業完了時は以下を貼る:
+
+1. `git log --oneline -10`
+2. 実行した検証コマンドと結果
+3. 変更の要約（何がどう変わったか、影響範囲）
+4. 残課題 / 次手

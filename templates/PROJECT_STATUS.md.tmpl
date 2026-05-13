@@ -1,0 +1,69 @@
+<!--
+PROJECT_STATUS.md.tmpl
+Copy to project root as `PROJECT_STATUS.md` and keep it updated.
+-->
+
+# PROJECT_STATUS — {{PROJECT_NAME}}
+
+Last updated: {{YYYY-MM-DD}}
+Owner: {{OWNER}}
+
+## 1) システム全体像
+
+- 目的: {{ONE_LINE_PURPOSE}}
+- 主要コンポーネント:
+  - {{COMPONENT_1}}
+  - {{COMPONENT_2}}
+- 重要な前提:
+  - {{ASSUMPTION_1}}
+  - {{ASSUMPTION_2}}
+
+## 2) ロードマップ
+
+### Now (今週)
+
+- [ ] {{NOW_1}}
+- [ ] {{NOW_2}}
+
+### Next (次)
+
+- [ ] {{NEXT_1}}
+- [ ] {{NEXT_2}}
+
+### Later (そのうち)
+
+- [ ] {{LATER_1}}
+
+## 3) 動いてるもの (Working)
+
+- Dev server: {{DEV_SERVER_STATUS}}
+- Jobs/daemons: {{JOBS_STATUS}}
+- CI: {{CI_STATUS}}
+
+## 4) 未達 / ブロッカー (Not yet / Blockers)
+
+- {{BLOCKER_1}}
+- {{BLOCKER_2}}
+
+## 5) マイルストーン
+
+- {{MILESTONE_1_DATE}}: {{MILESTONE_1}}
+- {{MILESTONE_2_DATE}}: {{MILESTONE_2}}
+
+## 6) 事故 / 既知の地雷
+
+### Incidents
+
+- {{INCIDENT_1_DATE}} — {{INCIDENT_1_SUMMARY}}（対策: {{INCIDENT_1_FIX}}）
+
+### Mines (触る前に必ず読む)
+
+- {{MINE_1}}
+- {{MINE_2}}
+
+## 7) 更新ルール
+
+- 変更を始める前に、このファイルの “Now / Blockers” を更新する
+- 中断/委任/セッション終了時は `HANDOFF.md` を更新する
+- secrets は書かない（キー名のみ、値は不可）
+- 「迷ったら小さく」: 1 commit = 1 領域、明示パス add

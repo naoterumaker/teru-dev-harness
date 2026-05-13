@@ -1,0 +1,68 @@
+<!--
+PROJECT_AGENTS.md.tmpl
+Copy to your project root as `AGENTS.md`, then fill {{PLACEHOLDERS}}.
+-->
+
+# {{PROJECT_NAME}} — AGENTS.md
+
+このドキュメントは、AI agent（Claude Code / Codex / Cursor / Gemini CLI 等）が
+このプロジェクトで安全に開発するための「掟」です。
+
+## Purpose
+
+- {{PROJECT_GOAL_1}}
+- {{PROJECT_GOAL_2}}
+
+## Roles (default)
+
+- Opus: 司令塔（分解 / DoD / 委任 / 検証）
+- Codex (GPT-5.5): 主実装（実装・テスト・コミット）
+- Claude Code (Sonnet): UI/computer-use（画面操作・UI 検証・デザイン）
+
+## Non-negotiables (MUST / MUST NOT)
+
+- MUST NOT: `git add -A` / `git add .`（必ず明示パスで add）
+- MUST NOT: `--no-verify`
+- MUST NOT: 作業 dir を `/tmp` / `/private/tmp` に置く
+- MUST NOT: `main` への force push
+- MUST: secrets を repo に書かない（`.env` は gitignore、`env.example` はキー名のみ）
+
+## Repo Quick Facts
+
+- Repo: {{REPO_URL}}
+- Default branch: {{DEFAULT_BRANCH}}
+- Workdir (absolute): {{ABS_WORKDIR}}
+- Tech stack: {{TECH_STACK}}
+
+## Where to start (Docs-first)
+
+- System overview: `PROJECT_STATUS.md`
+- Environment assumptions: `HANDOFF_CONTEXT.md`
+- Runbook: {{RUNBOOK_PATH_OR_NA}}
+
+## Allowed change scope
+
+- OK to edit:
+  - {{ALLOWED_PATH_1}}
+  - {{ALLOWED_PATH_2}}
+- Do NOT touch:
+  - {{FORBIDDEN_PATH_1}}
+  - {{FORBIDDEN_PATH_2}}
+
+## Local commands (examples)
+
+```bash
+# install
+{{INSTALL_CMD}}
+
+# dev
+{{DEV_CMD}}
+
+# test
+{{TEST_CMD}}
+```
+
+## Handoff
+
+作業を中断する場合は `HANDOFF.md` を更新してから終える。
+フォーマットは `docs/03_handoff_format.md`（teru-dev-harness）準拠。

@@ -1,0 +1,46 @@
+<!--
+delegate_prompt.md.tmpl
+Copy into an agent request (Codex/Claude/openclaw). Fill {{PLACEHOLDERS}}.
+-->
+
+# 1) 経緯 / 背景
+
+- 決定事項: {{DECISIONS}}
+- 目的: {{PURPOSE}}
+- なぜ今: {{WHY_NOW}}
+
+# 2) 作業 dir / リポジトリ
+
+- Repo: {{REPO_URL_OR_PATH}}
+- Branch: {{BRANCH}}
+- Workdir (absolute): {{ABS_WORKDIR}}
+
+# 3) 現状
+
+- 現在の状態: {{CURRENT_STATE_SUMMARY}}
+- 既知の制約: {{CONSTRAINTS}}
+- 参考: {{REFERENCES}}
+
+# 4) DoD (Definition of Done)
+
+- [ ] {{DOD_1}}
+- [ ] {{DOD_2}}
+- [ ] 検証: {{VERIFY_CMD}}
+
+# 5) 禁止事項 (MUST NOT)
+
+- MUST NOT: `git add -A` / `git add .`（必ず明示パスで add）
+- MUST NOT: `--no-verify`
+- MUST NOT: `/tmp` / `/private/tmp` 配下で作業
+- MUST NOT: `main` への force push
+- MUST NOT: secrets を repo / ログに貼る（値は不可）
+- {{EXTRA_FORBIDDEN}}
+
+# 6) 完了報告フォーマット
+
+完了したら以下を貼って終了:
+
+1. `git log --oneline -10`
+2. 変更ファイル要約（ファイル名 + 何を変えたか 1 行）
+3. 実行した検証コマンドと結果
+4. 残課題 / リスク / 次手
