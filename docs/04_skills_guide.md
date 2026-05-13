@@ -67,3 +67,39 @@ description: 1 行で何のスキルか + いつ発火するか
 
 - スキルは `skills/<name>/SKILL.md` に置く
 - 変更したら、関連ドキュメント（`docs/01_workflow.md`, `docs/03_handoff_format.md`）との整合も確認する
+
+## 命名規約 (おすすめ)
+
+- `name` は短く、動詞 + 対象（例: `handoff-pack`, `assign-codex`）
+- `description` は “いつ使うか” を必ず含める（トリガが曖昧だと暴発する）
+
+例:
+
+```yaml
+---
+name: handoff-pack
+description: セッション終了/中断/委任前に handoff を 1 ファイルに束ねたいときに使う
+---
+```
+
+## supporting files の使いどころ
+
+SKILL.md を肥大化させないために、同じディレクトリへ補助ファイルを置ける。
+
+- `templates/`（そのスキル専用のテンプレ）
+- `scripts/`（実行する補助スクリプト）
+- `examples/`（出力例、良い/悪い例）
+
+原則:
+
+- SKILL.md は “入口” と “ナビ” に集中する
+- 詳細な参考資料は別ファイルに逃がす
+
+## バージョニング
+
+破壊的変更をした場合は、本文に “変更履歴” を短く残す（任意）。
+
+```
+## Version History
+- 2026-05-13: initial
+```

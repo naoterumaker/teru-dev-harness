@@ -93,3 +93,22 @@ AI agent は「高速に書く」代わりに、誤操作・過剰権限・secre
 - `bootstrap/verify.sh` に “最低限の健康診断” を入れる（バージョン、doctor）
 - `docs/03_handoff_format.md` の Non-negotiables に secret 禁止を固定で入れる
 - 事故が起きたら `docs/05_lessons.md` に追記し、テンプレに反映する
+
+## “漏れたかも” の初動 (インシデント対応)
+
+1. まず公開範囲を止める（push 前なら commit しない、push 済みなら revoke を最優先）
+2. 秘密を **失効**させる（API key rotate / token revoke）
+3. 影響範囲を確認する（どの repo / ログ / CI に残ったか）
+4. 再発防止をルール化する（テンプレにチェック項目を入れる）
+
+## CI / cron の注意
+
+- 対話シェルと環境が違う（PATH/ENV が引き継がれない）
+- “起動できた” と “動いた” は別。verify/doctor を必ず回す
+- 必須 env は “存在 + 非空” をチェックする（キー名だけで満足しない）
+
+## Secret scanning (推奨)
+
+- `.env` を commit しない（gitignore）
+- `env.example` はキー名のみ（値は空）
+- 可能なら pre-commit / CI で secret scanning を入れる（導入するならプロジェクト側で）

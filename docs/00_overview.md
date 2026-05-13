@@ -96,4 +96,29 @@ teru-dev-harness/
 - API key を書かない（テンプレはプレースホルダのみ）
 - 便利そうな機能を思いつきで増やさない（まず docs のロードマップに落とす）
 
+## 用語
+
+- **SoT (Source of Truth)**: “真実の所在”。更新すべき場所を 1 つに決める
+- **DoD (Definition of Done)**: 完了条件。客観的に判定できる形で書く
+- **handoff**: 次の agent が作業再開できる “最小パッケージ”
+- **context-file**: LLM に渡すために束ねた context の 1 ファイル
+
+## 運用 3 原則 (短く覚える)
+
+1. **安全**: 禁則を守る（/tmp 禁止、git add -A 禁止、secrets 禁止）
+2. **再現性**: 実行コマンドと結果、次手を残す（handoff-pack）
+3. **分解**: 大きいタスクは小さく投げる（1 委任 1〜3 ゴール）
+
+## FAQ
+
+### Q. どれから触ればいい？
+
+- 新 PC: `bootstrap/install.sh` → `docs/00_overview.md` → `docs/01_workflow.md`
+- 新プロジェクト: `templates/` をコピー → `PROJECT_STATUS.md` を埋める
+
+### Q. ルールが増えすぎたら？
+
+- “守れないルール” は削るかテンプレに吸収する
+- 事故に直結する禁則だけは残す（/tmp、git add -A、secrets）
+
 次は `docs/01_workflow.md` に進んで、委任の決定木と依頼文の型を読む。

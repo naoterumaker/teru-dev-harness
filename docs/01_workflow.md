@@ -91,4 +91,33 @@ openclaw は「handoff の束ね」「context-file の生成」「委任のパ�
 - **git add -A** → 依頼文に「明示パス add」を強制する
 - **検証がない** → DoD に “実行したコマンド” を含める
 
+## タスク分割ルール (実戦)
+
+- 1 回の委任で “同時に変えるディレクトリ” を増やしすぎない
+- “設計変更” と “実装” は分ける（まず設計→合意→実装）
+- 大規模変更は “縦に薄く” 切る（動く最小を先に）
+
+## レビュー責務
+
+- 実装者（Codex/Claude）は **未確認事項** を明示する
+- 司令塔（Opus）は “スコープ逸脱” と “禁則違反” を最優先で見る
+- どちらも “再現コマンド” を残す（手で追える状態にする）
+
+## 6 ブロック依頼文のミニ例
+
+```md
+# 1) 経緯 / 背景
+- 目的: docs/03 の handoff template をプロジェクトに導入したい
+
+# 2) 作業 dir / リポジトリ
+- Workdir (absolute): /Users/you/dev/my-repo
+
+# 4) DoD
+- [ ] HANDOFF.md が新フォーマットになる
+- [ ] verify: npm test が通る
+
+# 5) 禁止事項
+- MUST NOT: git add -A / --no-verify / /tmp
+```
+
 次は `docs/02_context_engineering.md` で「context の設計」を読む。
